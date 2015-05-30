@@ -14,7 +14,7 @@ output:
 
 An R package caching the result of an expression on disk. It is intended for the incremental redaction of analysis code in R scripts, [R Markdown](http://rmarkdown.rstudio.com/) or [knitr](http://yihui.name/knitr/) documents.
 
-It is in essence similar to the caching functionality of knitr[^knitroptions], available from the console; i.e., without having to *knit* the document to profit from the cache. See the *cache* section of the [knitr options](http://yihui.name/knitr/options) documentation for more information about this functionality in knitr.
+It is in essence similar to the caching functionality of knitr, available from the console; i.e., without having to *knit* the document to profit from the cache. See the *cache* section of the [knitr options](http://yihui.name/knitr/options) documentation for more information about this functionality in knitr.
 
 ## Installation
 
