@@ -1,5 +1,5 @@
-library(dplyr, warn.conflicts = F)
-library(wakefield, warn.conflicts = F)
+if (!require("devtools")) install.packages("devtools")
+devtools::install_github("trinker/wakefield")
 
 random_data <- function() r_data_frame(n = 10, id,  age, sex, height, died, date_stamp)
 
