@@ -68,9 +68,9 @@ Further in the development of our code, we decide to add an independent variable
 
 ``` r
 model <- datanode(model_cache, force = T, { 
-  # this is the
+  # same formula as before with the additional hp indenpendent variable
   lm(formula = mpg ~ wt + hp, data = mtcars)
 })
 ```
 
-Afther the update of the model cache, a further execution of the repsonse code in the second block above would trigger a re-evaluation of the expression.
+After the update of the model cache, a further execution of the repsonse code in the second block above would trigger a re-evaluation of the expression.
