@@ -7,4 +7,5 @@ Authors@R: person("Julien", "Gaugaz", email = "julien.gaugaz@gmail.com", role = 
 Description: More about what it does (maybe more than one line)
 License: Creative Commons BY-SA 3.0
 LazyData: TRUE
-Suggests: testthat
+Imports: readr
+Suggests: testthat, devtools, wakefield
