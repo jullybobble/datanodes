@@ -1,4 +1,5 @@
-[![Travis-CI Build Status](https://travis-ci.org/jullybobble/datanodes.svg?branch=master)](https://travis-ci.org/jullybobble/datanodes)
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+[![Travis-CI Build Status](https://travis-ci.org/jullybobble/datanodes.svg?branch=master)](https://travis-ci.org/jullybobble/datanodes) [![Coverage Status](https://img.shields.io/coveralls/jullybobble/datanodes.svg)](https://coveralls.io/r/jullybobble/datanodes?branch=master)
 
 Datanodes
 =========
