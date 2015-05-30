@@ -14,6 +14,8 @@ output:
 
 [![Travis-CI Build Status](https://travis-ci.org/jullybobble/datanodes.svg?branch=master)](https://travis-ci.org/jullybobble/datanodes) [![Coverage Status](https://img.shields.io/coveralls/jullybobble/datanodes.svg)](https://coveralls.io/r/jullybobble/datanodes?branch=master)
 
+Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
+
 # Datanodes
 
 An R package caching the result of an expression on disk. It is intended for the incremental redaction of analysis code in R scripts, [R Markdown](http://rmarkdown.rstudio.com/) or [knitr](http://yihui.name/knitr/) documents.
