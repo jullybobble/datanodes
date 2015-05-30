@@ -7,7 +7,7 @@
 #' The given expression \code{expr} is evaluated only if one of the
 #' following condition is true:
 #'
-#' \itemize {
+#' \itemize{
 #'  - the file identified in \code{path} does *not* exist; or
 #'  - \code{force} is \code{TRUE}; or
 #'  - the latest modified time of the files in \code{depends_on} is later than
