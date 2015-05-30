@@ -1,0 +1,74 @@
+#' Cache the result of a given expression.
+#'
+#' The given expression `expr` is evaluated only if one of the following condition is true:
+#'
+#' - the file identified in `path` does *not* exist; or
+#' - `force` is `TRUE`; or
+#' - the latest modified time of the files in `depends_on` is later than the modified time of the file in `path`; or
+#' - `ask` is `TRUE` and the user answers `y` at the console (only considered in interactive mode).
+#'
+#' @param path the file caching the result of `expr`
+#' @param expr the expression to be evaluated if triggered
+#' @param force (default `FALSE`) whether to force the evaluation of the expression `expr` and the update of its cache
+#' @param depends_on a character vector of files on which the evaluation of the expression `expr` depends on.
+#'
+#' @return the result of the evaluation of the expression `expr` if triggered, or its cached value stored in `path` otherwise
+#' @import readr
+#' @export
+datanode <- function(path,
+                     expr,
+                     force = FALSE,
+                     depends_on = character(0),
+                     ask = F) {
+  triggered <-
+    force ||
+    !file.exists(path) ||
+    (!is.null(depends_on) && length(depends_on) != 0 &&
+       file_time_trigger(path, depends_on)) ||
+    (interactive() ||
+       (ask &&
+          ask_trigger(path)))
+
+
+  if(triggered) {
+    result <- expr
+    dn_save(result, path)
+    result
+  } else {
+    dn_load(path)
+  }
+}
+
+file_modif_time <- function(path) file.info(path) %>% with(mtime)
+
+file_time_trigger <- function(path, depends_on) {
+  !is.null(depends_on) &&
+    file_modif_time(path) < max(sapply(depends_on, file_modif_time))
+}
+
+ask_trigger <- function(path) {
+  if(!interactive()) {
+    TRUE
+  }
+  answer <- readline(sprintf("Recompute data in '%s'? [y|N] ", path))
+  if (answer == "" || trimws(tolower(answer)) == "n") {
+    FALSE
+  } else if (trimws(tolower(answer)) == "y") {
+    TRUE
+  } else {
+    message("can not parse answer: ", answer)
+    ask_trigger(path)
+  }
+}
+
+dn_load <- function(path) {
+  new_env <- new.env()
+  load(path, envir = new_env)
+  new_env$data
+}
+
+dn_save <- function(data, path) {
+  save(data, file = path)
+  data
+}
+

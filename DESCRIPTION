@@ -1,0 +1,10 @@
+Package: datanodes
+Type: Package
+Title: What the Package Does (Title Case)
+Version: 0.1
+Date: 2015-05-19
+Authors@R: person("Julien", "Gaugaz", email = "julien.gaugaz@gmail.com", role = c("aut", "cre"))
+Description: More about what it does (maybe more than one line)
+License: Creative Commons BY-SA 3.0
+LazyData: TRUE
+Suggests: testthat
