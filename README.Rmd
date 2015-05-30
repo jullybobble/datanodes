@@ -9,6 +9,7 @@ output:
     theme: cosmo
     highlight: pygments
 ---
+[![Travis-CI Build Status](https://travis-ci.org/jullybobble/datanodes.svg?branch=master)](https://travis-ci.org/jullybobble/datanodes)
 
 # Datanodes
 
