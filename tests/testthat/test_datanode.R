@@ -1,4 +1,5 @@
 require(wakefield)
+require(dplyr)
 
 random_data <- function() r_data_frame(n = 10, id,  age, sex, height, died, date_stamp)
 

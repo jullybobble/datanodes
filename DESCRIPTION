@@ -8,4 +8,4 @@ Description: More about what it does (maybe more than one line)
 License: Creative Commons BY-SA 3.0
 LazyData: TRUE
 Imports: readr
-Suggests: testthat
+Suggests: testthat, dplyr
