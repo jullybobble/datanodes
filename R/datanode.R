@@ -22,6 +22,8 @@
 #'        and the update of its cache, defaults to \code{TRUE}
 #' @param depends_on a character vector of files on which the evaluation of the
 #'        expression \code{expr} depends on.
+#' @param ask if evaluation was not triggered and R in is interactive mode, the
+#'        user will be promted to evaluate the expression or to use the cache
 #'
 #' @return the result of the evaluation of the expression \code{expr} if
 #'         triggered, or its cached value stored in \code{path} otherwise
@@ -51,7 +53,7 @@ datanode <- function(path,
   }
 }
 
-file_modif_time <- function(path) file.info(path) %>% with(mtime)
+file_modif_time <- function(path) file.info(path)$mtime
 
 file_time_trigger <- function(path, depends_on) {
   !is.null(depends_on) &&

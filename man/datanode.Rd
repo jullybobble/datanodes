@@ -15,7 +15,10 @@ datanode(path, expr, force = FALSE, depends_on = character(0), ask = F)
 and the update of its cache, defaults to \code{TRUE}}
 
 \item{depends_on}{a character vector of files on which the evaluation of the
-       expression \code{expr} depends on.}
+expression \code{expr} depends on.}
+
+\item{ask}{if evaluation was not triggered and R in is interactive mode, the
+       user will be promted to evaluate the expression or to use the cache}
 }
 \value{
 the result of the evaluation of the expression \code{expr} if
@@ -30,7 +33,7 @@ recent than the cache.
 The given expression \code{expr} is evaluated only if one of the
 following condition is true:
 
-\itemize {
+\itemize{
  - the file identified in \code{path} does *not* exist; or
  - \code{force} is \code{TRUE}; or
  - the latest modified time of the files in \code{depends_on} is later than

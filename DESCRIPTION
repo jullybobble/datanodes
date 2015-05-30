@@ -1,10 +1,16 @@
 Package: datanodes
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Cache the result of an expression on disk for incremental R code redaction
 Version: 0.1
 Date: 2015-05-19
 Authors@R: person("Julien", "Gaugaz", email = "julien.gaugaz@gmail.com", role = c("aut", "cre"))
-Description: More about what it does (maybe more than one line)
+Description: datanodes is intended for the incremental redaction of analysis code
+    in R scripts, R Markdown or knitr documents. It is in essence similar to the
+    caching functionality of knitr, but available from the console; i.e., without
+    having to knit the document to profit from the cache.
+    In addition to the simmple caching functionality, it also allows to specify
+    dependencies among cache files and a dependent datanode will be updated only
+    one of its dependencies was updated.
 License: Creative Commons Attribution 4.0 International License
 LazyData: TRUE
 Imports: readr
