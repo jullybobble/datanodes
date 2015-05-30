@@ -1,18 +1,30 @@
 #' Cache the result of a given expression.
 #'
-#' The given expression `expr` is evaluated only if one of the following condition is true:
+#' Evaluates an expression and caches its result. If a cache exists, the
+#' expression is re-evaluated only if one of the dependency files is more
+#' recent than the cache.
 #'
-#' - the file identified in `path` does *not* exist; or
-#' - `force` is `TRUE`; or
-#' - the latest modified time of the files in `depends_on` is later than the modified time of the file in `path`; or
-#' - `ask` is `TRUE` and the user answers `y` at the console (only considered in interactive mode).
+#' The given expression \code{expr} is evaluated only if one of the
+#' following condition is true:
 #'
-#' @param path the file caching the result of `expr`
+#' \itemize {
+#'  - the file identified in \code{path} does *not* exist; or
+#'  - \code{force} is \code{TRUE}; or
+#'  - the latest modified time of the files in \code{depends_on} is later than
+#'    the modified time of the file in \code{path}; or
+#'  - \code{ask} is \code{TRUE} and the user answers \code{y} at the console
+#'    (only considered in interactive mode).
+#' }
+#'
+#' @param path the file caching the result of \code{expr}
 #' @param expr the expression to be evaluated if triggered
-#' @param force (default `FALSE`) whether to force the evaluation of the expression `expr` and the update of its cache
-#' @param depends_on a character vector of files on which the evaluation of the expression `expr` depends on.
+#' @param force whether to force the evaluation of the expression \code{expr}
+#'        and the update of its cache, defaults to \code{TRUE}
+#' @param depends_on a character vector of files on which the evaluation of the
+#'        expression \code{expr} depends on.
 #'
-#' @return the result of the evaluation of the expression `expr` if triggered, or its cached value stored in `path` otherwise
+#' @return the result of the evaluation of the expression \code{expr} if
+#'         triggered, or its cached value stored in \code{path} otherwise
 #' @import readr
 #' @export
 datanode <- function(path,

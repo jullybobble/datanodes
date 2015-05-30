@@ -7,24 +7,36 @@
 datanode(path, expr, force = FALSE, depends_on = character(0), ask = F)
 }
 \arguments{
-\item{path}{the file caching the result of `expr`}
+\item{path}{the file caching the result of \code{expr}}
 
 \item{expr}{the expression to be evaluated if triggered}
 
-\item{force}{(default `FALSE`) whether to force the evaluation of the expression `expr` and the update of its cache}
+\item{force}{whether to force the evaluation of the expression \code{expr}
+and the update of its cache, defaults to \code{TRUE}}
 
-\item{depends_on}{a character vector of files on which the evaluation of the expression `expr` depends on.}
+\item{depends_on}{a character vector of files on which the evaluation of the
+       expression \code{expr} depends on.}
 }
 \value{
-the result of the evaluation of the expression `expr` if triggered, or its cached value stored in `path` otherwise
+the result of the evaluation of the expression \code{expr} if
+        triggered, or its cached value stored in \code{path} otherwise
 }
 \description{
-The given expression `expr` is evaluated only if one of the following condition is true:
+Evaluates an expression and caches its result. If a cache exists, the
+expression is re-evaluated only if one of the dependency files is more
+recent than the cache.
 }
 \details{
-- the file identified in `path` does *not* exist; or
-- `force` is `TRUE`; or
-- the latest modified time of the files in `depends_on` is later than the modified time of the file in `path`; or
-- `ask` is `TRUE` and the user answers `y` at the console (only considered in interactive mode).
+The given expression \code{expr} is evaluated only if one of the
+following condition is true:
+
+\itemize {
+ - the file identified in \code{path} does *not* exist; or
+ - \code{force} is \code{TRUE}; or
+ - the latest modified time of the files in \code{depends_on} is later than
+   the modified time of the file in \code{path}; or
+ - \code{ask} is \code{TRUE} and the user answers \code{y} at the console
+   (only considered in interactive mode).
+}
 }
 
