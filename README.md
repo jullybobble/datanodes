@@ -3,7 +3,7 @@ Datanodes
 
 An R package caching the result of an expression on disk. It is intended for the incremental redaction of analysis code in R scripts, [R Markdown](http://rmarkdown.rstudio.com/) or [knitr](http://yihui.name/knitr/) documents.
 
-It is in essence similar to the caching functionality of knitr[1], available from the console; i.e., without having to *knit* the document to profit from the cache.
+It is in essence similar to the caching functionality of knitr[^knitroptions], available from the console; i.e., without having to *knit* the document to profit from the cache. See the *cache* section of the [knitr options](http://yihui.name/knitr/options) documentation for more information about this functionality in knitr.
 
 Installation
 ------------
@@ -36,8 +36,6 @@ Most of the planned features above require the storage of some metadata.
 
 Usage
 -----
-
-Consider
 
 ``` r
 library(datanodes)
@@ -76,5 +74,3 @@ model <- datanode(model_cache, force = T, {
 ```
 
 Afther the update of the model cache, a further execution of the repsonse code in the second block above would trigger a re-evaluation of the expression.
-
-[1] see the *cache* section of the [knitr options](http://yihui.name/knitr/options) documentation.
