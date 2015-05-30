@@ -1,5 +1,4 @@
-if (!require("devtools")) install.packages("devtools")
-devtools::install_github("trinker/wakefield")
+require(wakefield)
 
 random_data <- function() r_data_frame(n = 10, id,  age, sex, height, died, date_stamp)
 
