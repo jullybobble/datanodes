@@ -1,8 +1,8 @@
 Package: datanodes
 Type: Package
 Title: Cache the result of an expression on disk for incremental R code redaction
-Version: 0.1
-Date: 2015-05-19
+Version: 0.1.1
+Date: 2015-05-31
 Authors@R: person("Julien", "Gaugaz", email = "julien.gaugaz@gmail.com", role = c("aut", "cre"))
 Description: datanodes is intended for the incremental redaction of analysis code
     in R scripts, R Markdown or knitr documents. It is in essence similar to the
