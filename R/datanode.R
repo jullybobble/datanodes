@@ -39,9 +39,9 @@ datanode <- function(path,
     !file.exists(path) ||
     (!is.null(depends_on) && length(depends_on) != 0 &&
        file_time_trigger(path, depends_on)) ||
-    (interactive() ||
-       (ask &&
-          ask_trigger(path)))
+    (interactive() &&
+       ask &&
+       ask_trigger(path))
 
 
   if(triggered) {
