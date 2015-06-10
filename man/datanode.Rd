@@ -4,7 +4,7 @@
 \alias{datanode}
 \title{Cache the result of a given expression.}
 \usage{
-datanode(path, expr, force = FALSE, depends_on = character(0), ask = F)
+datanode(path, expr, force = FALSE, depends_on = character(0))
 }
 \arguments{
 \item{path}{the file caching the result of \code{expr}}
@@ -15,10 +15,7 @@ datanode(path, expr, force = FALSE, depends_on = character(0), ask = F)
 and the update of its cache, defaults to \code{TRUE}}
 
 \item{depends_on}{a character vector of files on which the evaluation of the
-expression \code{expr} depends on.}
-
-\item{ask}{if evaluation was not triggered and R in is interactive mode, the
-       user will be promted to evaluate the expression or to use the cache}
+       expression \code{expr} depends on.}
 }
 \value{
 the result of the evaluation of the expression \code{expr} if
@@ -37,9 +34,7 @@ following condition is true:
  - the file identified in \code{path} does *not* exist; or
  - \code{force} is \code{TRUE}; or
  - the latest modified time of the files in \code{depends_on} is later than
-   the modified time of the file in \code{path}; or
- - \code{ask} is \code{TRUE} and the user answers \code{y} at the console
-   (only considered in interactive mode).
+   the modified time of the file in \code{path}.
 }
 }
 

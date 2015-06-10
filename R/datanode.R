@@ -11,9 +11,7 @@
 #'  - the file identified in \code{path} does *not* exist; or
 #'  - \code{force} is \code{TRUE}; or
 #'  - the latest modified time of the files in \code{depends_on} is later than
-#'    the modified time of the file in \code{path}; or
-#'  - \code{ask} is \code{TRUE} and the user answers \code{y} at the console
-#'    (only considered in interactive mode).
+#'    the modified time of the file in \code{path}.
 #' }
 #'
 #' @param path the file caching the result of \code{expr}
@@ -22,8 +20,6 @@
 #'        and the update of its cache, defaults to \code{TRUE}
 #' @param depends_on a character vector of files on which the evaluation of the
 #'        expression \code{expr} depends on.
-#' @param ask if evaluation was not triggered and R in is interactive mode, the
-#'        user will be promted to evaluate the expression or to use the cache
 #'
 #' @return the result of the evaluation of the expression \code{expr} if
 #'         triggered, or its cached value stored in \code{path} otherwise
@@ -32,16 +28,12 @@
 datanode <- function(path,
                      expr,
                      force = FALSE,
-                     depends_on = character(0),
-                     ask = F) {
+                     depends_on = character(0)) {
   triggered <-
     force ||
     !file.exists(path) ||
     (!is.null(depends_on) && length(depends_on) != 0 &&
-       file_time_trigger(path, depends_on)) ||
-    (interactive() &&
-       ask &&
-       ask_trigger(path))
+       file_time_trigger(path, depends_on))
 
 
   if(triggered) {
