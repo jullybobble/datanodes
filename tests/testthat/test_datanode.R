@@ -2,6 +2,9 @@ require(wakefield, warn.conflicts = F)
 require(dplyr, warn.conflicts = F)
 
 random_data <- function() r_data_frame(n = 10, id,  age, sex, height, died, date_stamp)
+csv_read_args <- list(col_types = list(ID = col_character(),
+                                       Height = col_double(),
+                                       Sex = col_factor(c("Female", "Male"))))
 
 test_that("dn create file if it doesn't exist", {
   file <- tempfile()
@@ -105,4 +108,79 @@ test_that("a data node gets triggered by `file_time` with file dependency", {
   file.remove(dep_file)
   file.remove(file)
 })
+
+test_that("rdata io reads what was written", {
+  f <- tempfile()
+  on.exit(file.remove(f))
+
+  data <- random_data()
+
+  datanode(f, io = rdata_io, data)
+
+  expect_equivalent(datanode(f, io = rdata_io, data),
+                    data)
+
+})
+
+test_that("csv io reads what was written", {
+  f <- tempfile()
+  on.exit(file.remove(f))
+
+  data <- random_data() %>%
+    as.data.frame() # all.equal.tbl_df has problems with Date after csv write-read
+
+  datanode(f, io = csv_io, data)
+
+  expect_equivalent(datanode(f,
+                             io = csv_io,
+                             read_args = csv_read_args,
+                             NULL),
+                    data)
+
+})
+
+
+test_that("csv io is selected if file ends in '.csv'", {
+  f <- tempfile(fileext = '.cSv')
+  on.exit(file.remove(f))
+
+  data <- random_data() %>%
+    as.data.frame() # all.equal.tbl_df has problems with Date after csv write-read
+
+  datanode(f, data)
+
+  expect_equivalent(csv_io$read(f,
+                                list(col_types = csv_read_args$col_types)),
+                    data)
+})
+
+
+test_that("RData io is selected if file ends in '.RData'", {
+  f <- tempfile(fileext = '.rDaTa')
+  on.exit(file.remove(f))
+
+  data <- random_data() %>%
+    as.data.frame() # all.equal.tbl_df has problems with Date after csv write-read
+
+  datanode(f, data)
+
+  expect_equivalent(rdata_io$read(f),
+                    data)
+})
+
+test_that("RDS io is selected if file ends in 'rds'", {
+  f <- tempfile(fileext = '.rdS')
+  on.exit(file.remove(f))
+
+  data <- random_data() %>%
+    as.data.frame() # all.equal.tbl_df has problems with Date after csv write-read
+
+  datanode(f, data)
+
+  expect_equivalent(rds_io$read(f),
+                    data)
+})
+
+
+
 
