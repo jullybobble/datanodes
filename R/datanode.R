@@ -11,9 +11,7 @@
 #'  - the file identified in \code{path} does *not* exist; or
 #'  - \code{force} is \code{TRUE}; or
 #'  - the latest modified time of the files in \code{depends_on} is later than
-#'    the modified time of the file in \code{path}; or
-#'  - \code{ask} is \code{TRUE} and the user answers \code{y} at the console
-#'    (only considered in interactive mode).
+#'    the modified time of the file in \code{path}.
 #' }
 #'
 #' @param path the file caching the result of \code{expr}
@@ -22,8 +20,20 @@
 #'        and the update of its cache, defaults to \code{TRUE}
 #' @param depends_on a character vector of files on which the evaluation of the
 #'        expression \code{expr} depends on.
-#' @param ask if evaluation was not triggered and R in is interactive mode, the
-#'        user will be promted to evaluate the expression or to use the cache
+#' @param io a list with two named function \code{read} and \code{write}.
+#'        \code{read} takes \code{path} and \code{args} as arguments,
+#'        and \code{write} takes in addition \code{data}, \code{path} and
+#'        \code{args}. \code{args} are a list of additional arguments possibly
+#'        to the underlying reading or writing functions. Implementations for
+#'        \code{\link{csv_io}}, \code{\link{rdata_io}} and \code{\link{rds_io}}
+#'        are provided. The default value depends on the extension of the
+#'        file described by the \code{path} parameter: \code{.csv},
+#'        \code{.RData} and \code{.rds} corresponding to the 3 \code{io}
+#'        implementations, defaulting to \code{rds_io}.
+#' @param write_args a list of additional parameters to the \code{io$write} function.
+#' @param read_args a list of additional parameters to the \code{io$read} function.
+#' @param ... additinal parameters to the \code{io$read} function, concatenated
+#'        after the list in \code{read_args}.
 #'
 #' @return the result of the evaluation of the expression \code{expr} if
 #'         triggered, or its cached value stored in \code{path} otherwise
@@ -33,23 +43,24 @@ datanode <- function(path,
                      expr,
                      force = FALSE,
                      depends_on = character(0),
-                     ask = F) {
+                     io = if (grepl("(?i).*\\.csv$", path)) csv_io
+                     else if (grepl("(?i).*\\.RData$", path)) rdata_io
+                     else rds_io,
+                     write_args = NULL,
+                     read_args = NULL,
+                     ...) {
   triggered <-
     force ||
     !file.exists(path) ||
     (!is.null(depends_on) && length(depends_on) != 0 &&
-       file_time_trigger(path, depends_on)) ||
-    (interactive() &&
-       ask &&
-       ask_trigger(path))
-
+       file_time_trigger(path, depends_on))
 
   if(triggered) {
     result <- expr
-    dn_save(result, path)
+    io$write(data = result, path = path, args = write_args)
     result
   } else {
-    dn_load(path)
+    io$read(path = path, args = read_args)
   }
 }
 
@@ -73,16 +84,5 @@ ask_trigger <- function(path) {
     message("can not parse answer: ", answer)
     ask_trigger(path)
   }
-}
-
-dn_load <- function(path) {
-  new_env <- new.env()
-  load(path, envir = new_env)
-  new_env$data
-}
-
-dn_save <- function(data, path) {
-  save(data, file = path)
-  data
 }
 

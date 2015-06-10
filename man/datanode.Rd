@@ -4,7 +4,9 @@
 \alias{datanode}
 \title{Cache the result of a given expression.}
 \usage{
-datanode(path, expr, force = FALSE, depends_on = character(0), ask = F)
+datanode(path, expr, force = FALSE, depends_on = character(0), io = if
+  (grepl("(?i).*\\\\.csv$", path)) csv_io else if (grepl("(?i).*\\\\.RData$",
+  path)) rdata_io else rds_io, write_args = NULL, read_args = NULL, ...)
 }
 \arguments{
 \item{path}{the file caching the result of \code{expr}}
@@ -17,8 +19,23 @@ and the update of its cache, defaults to \code{TRUE}}
 \item{depends_on}{a character vector of files on which the evaluation of the
 expression \code{expr} depends on.}
 
-\item{ask}{if evaluation was not triggered and R in is interactive mode, the
-       user will be promted to evaluate the expression or to use the cache}
+\item{io}{a list with two named function \code{read} and \code{write}.
+\code{read} takes \code{path} and \code{args} as arguments,
+and \code{write} takes in addition \code{data}, \code{path} and
+\code{args}. \code{args} are a list of additional arguments possibly
+to the underlying reading or writing functions. Implementations for
+\code{\link{csv_io}}, \code{\link{rdata_io}} and \code{\link{rds_io}}
+are provided. The default value depends on the extension of the
+file described by the \code{path} parameter: \code{.csv},
+\code{.RData} and \code{.rds} corresponding to the 3 \code{io}
+implementations, defaulting to \code{rds_io}.}
+
+\item{write_args}{a list of additional parameters to the \code{io$write} function.}
+
+\item{read_args}{a list of additional parameters to the \code{io$read} function.}
+
+\item{...}{additinal parameters to the \code{io$read} function, concatenated
+       after the list in \code{read_args}.}
 }
 \value{
 the result of the evaluation of the expression \code{expr} if
@@ -37,9 +54,7 @@ following condition is true:
  - the file identified in \code{path} does *not* exist; or
  - \code{force} is \code{TRUE}; or
  - the latest modified time of the files in \code{depends_on} is later than
-   the modified time of the file in \code{path}; or
- - \code{ask} is \code{TRUE} and the user answers \code{y} at the console
-   (only considered in interactive mode).
+   the modified time of the file in \code{path}.
 }
 }
 
