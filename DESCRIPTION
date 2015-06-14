@@ -14,4 +14,4 @@ Description: datanodes is intended for the incremental redaction of analysis cod
 License: Creative Commons Attribution 4.0 International License
 LazyData: TRUE
 Imports: readr
-Suggests: testthat
+Suggests: devtools, testthat
