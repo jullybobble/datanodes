@@ -71,18 +71,3 @@ file_time_trigger <- function(path, depends_on) {
     file_modif_time(path) < max(sapply(depends_on, file_modif_time))
 }
 
-ask_trigger <- function(path) {
-  if(!interactive()) {
-    TRUE
-  }
-  answer <- readline(sprintf("Recompute data in '%s'? [y|N] ", path))
-  if (answer == "" || trimws(tolower(answer)) == "n") {
-    FALSE
-  } else if (trimws(tolower(answer)) == "y") {
-    TRUE
-  } else {
-    message("can not parse answer: ", answer)
-    ask_trigger(path)
-  }
-}
-
